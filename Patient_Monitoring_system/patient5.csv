@@ -1,0 +1,121 @@
+patient_id,timestamp,heart_rate_bpm,systolic_bp_mmHg,diastolic_bp_mmHg,respiratory_rate_bpm,body_temperature_c,spo2_percent,lactate,clinical_state,consciousness
+REC_005,08:00:00,118,96,59,25,38.79,93.1,2.7,Initial Resuscitation,0
+REC_005,08:02:00,117,96,59,26,38.79,93.2,2.7,Initial Resuscitation,0
+REC_005,08:04:00,119,96,59,25,38.8,93.0,2.7,Initial Resuscitation,0
+REC_005,08:06:00,118,96,59,26,38.8,93.1,2.7,Initial Resuscitation,0
+REC_005,08:08:00,118,96,59,26,38.81,93.2,2.7,Initial Resuscitation,0
+REC_005,08:10:00,118,95,59,26,38.81,93.3,2.7,Initial Resuscitation,0
+REC_005,08:12:00,118,95,59,26,38.8,93.4,2.7,Initial Resuscitation,0
+REC_005,08:14:00,118,95,59,26,38.79,93.5,2.7,Initial Resuscitation,0
+REC_005,08:16:00,119,95,59,26,38.78,93.6,2.7,Initial Resuscitation,0
+REC_005,08:18:00,118,95,59,25,38.79,93.7,2.7,Initial Resuscitation,0
+REC_005,08:20:00,118,97,59,25,38.78,93.7,2.7,Initial Resuscitation,0
+REC_005,08:22:00,118,97,59,25,38.79,93.8,2.7,Initial Resuscitation,0
+REC_005,08:24:00,119,97,59,25,38.78,93.7,2.7,Initial Resuscitation,0
+REC_005,08:26:00,119,98,59,25,38.77,93.8,2.7,Initial Resuscitation,0
+REC_005,08:28:00,120,99,58,25,38.77,93.9,2.7,Initial Resuscitation,0
+REC_005,08:30:00,119,99,59,25,38.76,94.0,2.67,Responding to Rx,0
+REC_005,08:32:00,118,100,59,25,38.74,94.0,2.64,Responding to Rx,0
+REC_005,08:34:00,118,100,59,24,38.72,94.1,2.6,Responding to Rx,0
+REC_005,08:36:00,118,101,60,24,38.71,94.2,2.59,Responding to Rx,0
+REC_005,08:38:00,118,102,60,24,38.68,94.2,2.55,Responding to Rx,0
+REC_005,08:40:00,117,102,60,24,38.65,94.3,2.53,Responding to Rx,0
+REC_005,08:42:00,116,102,60,24,38.63,94.3,2.49,Responding to Rx,0
+REC_005,08:44:00,115,103,60,24,38.6,94.4,2.47,Responding to Rx,0
+REC_005,08:46:00,115,103,60,24,38.56,94.5,2.43,Responding to Rx,0
+REC_005,08:48:00,114,103,60,24,38.54,94.6,2.39,Responding to Rx,0
+REC_005,08:50:00,113,104,60,23,38.53,94.7,2.37,Responding to Rx,0
+REC_005,08:52:00,112,104,61,23,38.51,94.8,2.35,Responding to Rx,0
+REC_005,08:54:00,112,105,61,23,38.48,94.8,2.34,Responding to Rx,0
+REC_005,08:56:00,112,105,61,23,38.43,94.9,2.31,Responding to Rx,0
+REC_005,08:58:00,111,105,61,23,38.39,95.0,2.31,Responding to Rx,0
+REC_005,09:00:00,111,105,61,23,38.37,95.2,2.27,Responding to Rx,0
+REC_005,09:02:00,110,106,62,23,38.35,95.3,2.24,Responding to Rx,0
+REC_005,09:04:00,110,106,62,23,38.33,95.5,2.24,Responding to Rx,0
+REC_005,09:06:00,109,106,62,23,38.3,95.6,2.21,Responding to Rx,0
+REC_005,09:08:00,108,107,62,23,38.27,95.6,2.17,Responding to Rx,0
+REC_005,09:10:00,108,107,63,22,38.25,95.7,2.14,Responding to Rx,0
+REC_005,09:12:00,107,107,63,22,38.23,95.8,2.11,Responding to Rx,0
+REC_005,09:14:00,107,108,63,22,38.2,95.9,2.09,Responding to Rx,0
+REC_005,09:16:00,106,108,63,22,38.16,96.0,2.08,Responding to Rx,0
+REC_005,09:18:00,106,109,63,22,38.14,96.2,2.05,Responding to Rx,0
+REC_005,09:20:00,106,109,64,22,38.12,96.2,2.04,Responding to Rx,0
+REC_005,09:22:00,105,109,63,21,38.08,96.3,2.02,Responding to Rx,0
+REC_005,09:24:00,105,110,64,21,38.04,96.4,2.01,Responding to Rx,0
+REC_005,09:26:00,105,110,64,21,38.02,96.5,1.98,Responding to Rx,0
+REC_005,09:28:00,104,111,64,21,38.02,96.6,1.95,Responding to Rx,0
+REC_005,09:30:00,104,110,64,21,38.01,96.6,1.91,Responding to Rx,0
+REC_005,09:32:00,103,111,64,21,37.98,96.7,1.89,Responding to Rx,0
+REC_005,09:34:00,102,111,64,20,37.96,96.8,1.86,Responding to Rx,0
+REC_005,09:36:00,102,112,65,20,37.95,96.9,1.84,Responding to Rx,0
+REC_005,09:38:00,101,112,65,20,37.91,96.9,1.81,Responding to Rx,0
+REC_005,09:40:00,101,112,65,20,37.91,97.0,1.82,Responding to Rx,0
+REC_005,09:42:00,100,113,66,20,37.89,97.2,1.81,Responding to Rx,0
+REC_005,09:44:00,100,113,66,20,37.88,97.3,1.77,Responding to Rx,0
+REC_005,09:46:00,99,114,66,20,37.85,97.5,1.74,Responding to Rx,0
+REC_005,09:48:00,99,114,67,19,37.8,97.5,1.72,Responding to Rx,0
+REC_005,09:50:00,99,114,67,19,37.8,97.6,1.69,Responding to Rx,0
+REC_005,09:52:00,98,115,67,19,37.79,97.6,1.66,Responding to Rx,0
+REC_005,09:54:00,97,115,67,19,37.76,97.7,1.64,Responding to Rx,0
+REC_005,09:56:00,96,115,67,19,37.73,97.8,1.63,Responding to Rx,0
+REC_005,09:58:00,96,115,68,18,37.68,97.8,1.6,Responding to Rx,0
+REC_005,10:00:00,96,116,68,18,37.66,97.9,1.57,Responding to Rx,0
+REC_005,10:02:00,95,116,68,18,37.65,98.0,1.55,Responding to Rx,0
+REC_005,10:04:00,94,116,68,18,37.62,98.1,1.54,Responding to Rx,0
+REC_005,10:06:00,94,117,68,18,37.6,98.2,1.51,Responding to Rx,0
+REC_005,10:08:00,93,117,69,18,37.58,98.3,1.48,Responding to Rx,0
+REC_005,10:10:00,93,117,69,17,37.53,98.4,1.47,Responding to Rx,0
+REC_005,10:12:00,92,117,69,17,37.51,98.5,1.44,Stabilizing (Ward Transfer),0
+REC_005,10:14:00,92,118,69,17,37.49,98.6,1.42,Stabilizing (Ward Transfer),0
+REC_005,10:16:00,91,118,69,17,37.47,98.7,1.4,Stabilizing (Ward Transfer),0
+REC_005,10:18:00,90,118,70,17,37.44,98.7,1.38,Stabilizing (Ward Transfer),0
+REC_005,10:20:00,90,119,69,17,37.39,98.8,1.36,Stabilizing (Ward Transfer),0
+REC_005,10:22:00,89,119,70,17,37.36,98.9,1.34,Stabilizing (Ward Transfer),0
+REC_005,10:24:00,89,120,70,17,37.32,98.9,1.32,Stabilizing (Ward Transfer),0
+REC_005,10:26:00,88,120,71,16,37.31,99.0,1.29,Stabilizing (Ward Transfer),0
+REC_005,10:28:00,87,120,71,16,37.28,99.0,1.27,Stabilizing (Ward Transfer),0
+REC_005,10:30:00,86,121,71,16,37.25,99.0,1.26,Stabilizing (Ward Transfer),0
+REC_005,10:32:00,86,121,71,16,37.21,99.0,1.24,Stabilizing (Ward Transfer),0
+REC_005,10:34:00,85,122,71,15,37.18,99.0,1.24,Stabilizing (Ward Transfer),0
+REC_005,10:36:00,85,122,71,15,37.15,99.0,1.19,Stabilizing (Ward Transfer),0
+REC_005,10:38:00,85,122,72,15,37.15,99.0,1.18,Stabilizing (Ward Transfer),0
+REC_005,10:40:00,84,122,72,15,37.15,99.0,1.16,Stabilizing (Ward Transfer),0
+REC_005,10:42:00,84,122,72,15,37.13,99.0,1.14,Stabilizing (Ward Transfer),0
+REC_005,10:44:00,84,122,73,15,37.1,99.0,1.12,Stabilizing (Ward Transfer),0
+REC_005,10:46:00,84,122,73,15,37.09,99.0,1.09,Stabilizing (Ward Transfer),0
+REC_005,10:48:00,83,122,73,15,37.04,99.0,1.07,Stabilizing (Ward Transfer),0
+REC_005,10:50:00,82,122,73,15,37.01,99.0,1.05,Stabilizing (Ward Transfer),0
+REC_005,10:52:00,82,122,73,15,36.99,99.0,1.04,Stabilizing (Ward Transfer),0
+REC_005,10:54:00,82,122,73,15,36.99,99.0,1.02,Stabilizing (Ward Transfer),0
+REC_005,10:56:00,81,122,73,15,36.97,99.0,1.01,Stabilizing (Ward Transfer),0
+REC_005,10:58:00,80,122,74,15,36.94,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:00:00,80,122,74,15,36.93,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:02:00,80,122,74,15,36.91,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:04:00,79,122,74,15,36.88,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:06:00,79,122,74,15,36.86,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:08:00,78,122,75,15,36.83,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:10:00,77,122,75,15,36.81,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:12:00,77,122,75,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:14:00,76,122,76,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:16:00,75,122,76,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:18:00,75,122,76,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:20:00,74,122,76,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:22:00,74,122,76,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:24:00,74,122,77,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:26:00,74,122,77,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:28:00,74,122,77,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:30:00,73,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:32:00,73,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:34:00,73,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:36:00,72,122,77,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:38:00,72,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:40:00,71,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:42:00,71,121,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:44:00,71,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:46:00,70,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:48:00,70,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:50:00,70,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:52:00,70,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:54:00,70,121,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:56:00,70,121,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
+REC_005,11:58:00,70,122,78,15,36.8,99.0,1.0,Stabilizing (Ward Transfer),0
