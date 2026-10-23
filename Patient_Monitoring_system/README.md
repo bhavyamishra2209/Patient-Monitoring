@@ -5,6 +5,7 @@ An intelligent healthcare system that combines clinical decision-support algorit
 ## Table of Contents
 
 - [Overview](#overview)
+- [How to Reproduce (3 Research Gaps)](#how-to-reproduce-3-research-gaps)
 - [Features](#features)
 - [System Architecture](#system-architecture)
 - [Installation](#installation)
@@ -14,14 +15,84 @@ An intelligent healthcare system that combines clinical decision-support algorit
 - [Machine Learning Models](#machine-learning-models)
 - [Configuration](#configuration)
 
-## Overview
+## How to Reproduce (3 Research Gaps)
 
-This project implements an AI-driven patient prioritization system designed for emergency departments and ICU settings. It uses a multi-layered approach combining:
+All models and evaluations run on ONE real dataset: **PhysioNet/CinC Challenge 2019** (`data/physionet2019/*.psv`). No synthetic data is generated or used as fallback, and `patient*.csv` files are never mixed into training or evaluation.
 
-1. **Clinical Scoring Systems**: qSOFA and NEWS2 for evidence-based risk assessment
-2. **Machine Learning**: Logistic Regression and Random Forest for predictive risk modeling
-3. **Bayesian Inference**: Probabilistic reasoning for clinical decision support
-4. **Dynamic Weighting**: Adaptive algorithms that adjust to ICU capacity and workload
+### Quick Start (One Command Reproduction)
+
+To execute the entire end-to-end pipeline (data preparation, Gap 1, Gap 2, Gap 3, and markdown report compilation):
+
+```powershell
+python make_report.py
+```
+
+This generates all metrics, 95% bootstrap confidence intervals, and publication-ready figures in `artifacts/`:
+- `artifacts/split.json`: Frozen 70/15/15 patient-level stratified split (seed 42).
+- `artifacts/features.parquet`: Vectorized rolling temporal feature cache.
+- `artifacts/gap1_results.json`, `gap1_roc_pr.png`, `gap1_lead_time.png`
+- `artifacts/gap2_results.json`, `gap2_shap_summary.png`, `gap2_fairness.png`
+- `artifacts/gap3_results.json`, `gap3_policy_comparison.png`, `gap3_capacity_sweep.png`
+- `artifacts/RESEARCH_GAPS_REPORT.md`: Comprehensive traceable Markdown report.
+
+---
+
+### Step-by-Step Execution Commands
+
+If you wish to execute each research gap independently:
+
+#### Step 0: Ingest Data & Engineer Rolling Features
+```powershell
+python pn_data.py
+```
+- Loads all `.psv` files from `data/physionet2019/`.
+- Forward-fills vitals/labs, adds missingness indicators, and calculates `hours_since_last_lab`.
+- Vectorizes 4h & 12h rolling means, standard deviations, OLS trajectory slopes, and baseline deltas.
+- Enforces frozen patient-level 70/15/15 stratified split (`artifacts/split.json`).
+- Caches features to `artifacts/features.parquet`.
+
+#### Step 1: Gap 1 - Temporal Deterioration Prediction
+```powershell
+python train_gap1.py
+```
+- Trains on pre-onset hours ($t < t_{\text{onset}}$) with target $y_t = 1$ if sepsis occurs in $[t+2, t+6]$.
+- Evaluates Temporal LightGBM against Static LightGBM, rule-based NEWS2, and rule-based qSOFA.
+- Computes AUROC, AUPRC, and sensitivity at 90% validation specificity with 95% patient-bootstrap CIs.
+- Measures advance warning lead time before clinical onset.
+
+#### Step 2: Gap 2 - Trust, False-Alarm Filtering & Explainability
+```powershell
+python train_gap2.py
+```
+- Evaluates raw alarms ($P_{\text{temporal}} \ge \text{threshold}_{\text{val}}$).
+- Trains second-stage False-Alarm Filter (LightGBM) to differentiate true imminent sepsis from premature alarms.
+- Uses SHAP (`TreeExplainer`) to compute global importance and per-alert top-5 contributing features.
+- Audits demographic fairness across Gender and Age bands (<50, 50-70, >70).
+
+#### Step 3: Gap 3 - Triage and Resource Prioritization Under Constraints
+```powershell
+python triage_sim.py
+```
+- Simulates an ICU/ED ward under capacity constraints ($N$ beds, $K$ nurse reviews per hour).
+- Benchmarks 4 policies: FIFO, Greedy-by-NEWS2, Greedy-by-ML, and Constraint-Aware Ranker.
+- Sweeps $N \in [5, 20]$ and $K \in [1, 4]$ to evaluate policy robustness under staffing shortages.
+
+#### Step 4: Launch Real-Time PhysioNet Web Dashboard
+```powershell
+python web_server.py
+```
+- Open `http://localhost:5000` in your web browser.
+- Displays 3 dedicated tabs for Gap 1, Gap 2, and Gap 3.
+- Streams real PhysioNet TEST patients hour by hour with live trajectory charts, SHAP explanation tags, and interactive $N$/$K$ ward capacity sliders.
+
+---
+
+### Data Leakage Prevention Statement
+
+To ensure rigorous clinical validity:
+1. **Pre-Onset Windowing**: Evaluated strictly on pre-onset hours ($t < t_{\text{onset}}$ where `SepsisLabel == 0` at hour $t$). Once sepsis onset occurs, early prediction has either succeeded or failed; including post-onset hours would cause trivial diagnostic leakage (artificially inflating AUROC > 0.98).
+2. **Lookahead Separation**: Lookahead window begins at $t+2$ ($[t+2, t+6]$), enforcing a 2-hour buffer so the model must forecast deterioration rather than detect instantaneous abnormalities.
+3. **Patient-Level Split**: Patient records are never shared between train, validation, and test splits. All rolling windows are strictly isolated within each patient.
 
 ## Features
 

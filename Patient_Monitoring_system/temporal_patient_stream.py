@@ -142,7 +142,7 @@ class TemporalMonitoringManager:
         # Build concise clinical badge
         if stable_tier == "CRITICAL":
             tier_label = "CRITICAL"
-            tier_color = "danger"
+            tier_color = "critical"
             summary_tag = "🚨 ACUTE DETERIORATION: Immediate escalation required."
         elif stable_tier == "EARLY_WARNING":
             tier_label = "EARLY WARNING"
@@ -150,7 +150,7 @@ class TemporalMonitoringManager:
             summary_tag = f"⚡ IMPENDING CRASH in ~{lead_time}h (Trajectory divergence)."
         else:
             tier_label = "STABLE"
-            tier_color = "success"
+            tier_color = "stable"
             summary_tag = "✅ STABLE: Normal trajectory within physiological limits."
 
         # Map display risk

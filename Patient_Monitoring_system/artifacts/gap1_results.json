@@ -1,0 +1,115 @@
+{
+  "model_metrics": {
+    "temporal_lgbm": {
+      "name": "Temporal LightGBM (Gap 1)",
+      "auroc": 0.9174,
+      "auroc_ci": [
+        0.4769,
+        0.9174
+      ],
+      "auprc": 0.4276,
+      "auprc_ci": [
+        0.4276,
+        0.4276
+      ],
+      "sensitivity_at_90_spec": 0.1667,
+      "sensitivity_ci": [
+        0.1667,
+        0.1667
+      ],
+      "test_specificity": 0.9211,
+      "val_threshold": 0.8854,
+      "mean_lead_time_hours": 16.0,
+      "lead_times_by_patient": [
+        16.0
+      ]
+    },
+    "static_lgbm": {
+      "name": "Static LightGBM (Point-in-Time)",
+      "auroc": 0.9167,
+      "auroc_ci": [
+        0.4722,
+        0.9167
+      ],
+      "auprc": 0.2401,
+      "auprc_ci": [
+        0.2401,
+        0.2401
+      ],
+      "sensitivity_at_90_spec": 0.8333,
+      "sensitivity_ci": [
+        0.8333,
+        0.8333
+      ],
+      "test_specificity": 0.8596,
+      "val_threshold": 0.9299,
+      "mean_lead_time_hours": 24.0,
+      "lead_times_by_patient": [
+        24.0
+      ]
+    },
+    "rule_news2": {
+      "name": "Rule-Based NEWS2",
+      "auroc": 0.2018,
+      "auroc_ci": [
+        0.1915,
+        0.5278
+      ],
+      "auprc": 0.0402,
+      "auprc_ci": [
+        0.0398,
+        0.2619
+      ],
+      "sensitivity_at_90_spec": 0.0,
+      "sensitivity_ci": [
+        0.0,
+        0.0
+      ],
+      "test_specificity": 0.7105,
+      "val_threshold": 2.0,
+      "mean_lead_time_hours": 0.0,
+      "lead_times_by_patient": [
+        0.0
+      ]
+    },
+    "rule_qsofa": {
+      "name": "Rule-Based qSOFA",
+      "auroc": 0.5,
+      "auroc_ci": [
+        0.5,
+        0.5
+      ],
+      "auprc": 0.05,
+      "auprc_ci": [
+        0.05,
+        0.25
+      ],
+      "sensitivity_at_90_spec": 0.0,
+      "sensitivity_ci": [
+        0.0,
+        0.0
+      ],
+      "test_specificity": 1.0,
+      "val_threshold": 1.0,
+      "mean_lead_time_hours": 0.0,
+      "lead_times_by_patient": [
+        0.0
+      ]
+    }
+  },
+  "patient_lead_details": [
+    {
+      "patient_id": "p000016",
+      "onset_hour": 25.0,
+      "lead_times": {
+        "temporal_lgbm": 16.0,
+        "static_lgbm": 24.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    }
+  ],
+  "n_test_patients": 3,
+  "n_septic_test_patients": 1,
+  "target_definition": "SepsisLabel==1 at any hour in [t+2, t+6] (pre-onset only)"
+}

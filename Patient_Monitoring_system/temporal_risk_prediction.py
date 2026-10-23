@@ -8,6 +8,7 @@ on rolling-window trend features and benchmarks against rule-based NEWS2 and sta
 
 import os
 import glob
+import json
 import joblib
 import numpy as np
 import pandas as pd
@@ -53,46 +54,28 @@ class TemporalRiskPredictor:
     2 to 6 hours into the future based on rolling vital trajectories.
     """
 
-    MODEL_FILE = "temporal_lgbm_model.joblib"
-    FEATURE_COLS_FILE = "temporal_feature_cols.joblib"
-    BENCHMARK_FILE = "temporal_benchmark_results.joblib"
+    MODEL_FILE = os.path.join("artifacts", "temporal_lgbm.joblib")
+    FEATURE_COLS_FILE = os.path.join("artifacts", "temporal_feature_cols.joblib")
+    BENCHMARK_FILE = os.path.join("artifacts", "gap1_results.json")
 
     def __init__(self, model_type: str = "lightgbm", lookahead_hours: float = 4.0):
         self.model_type = model_type
         self.lookahead_hours = lookahead_hours
         self.model = None
-        self.feature_columns = None
-        self.benchmark_results = {
-            "temporal_gbdt": {
-                "name": "Temporal GBDT (Ours - Gap 1)",
-                "auroc": 0.998,
-                "auprc": 0.999,
-                "lead_time_advantage_hours": 3.0,
-                "lead_time_range": "2.5 – 4.5 hrs"
-            },
-            "static_rf": {
-                "name": "Static Point-in-Time ML (RF)",
-                "auroc": 0.997,
-                "auprc": 0.998,
-                "lead_time_advantage_hours": 0.5,
-                "lead_time_range": "0 – 1.0 hr"
-            },
-            "rule_news2": {
-                "name": "Rule-Based NEWS2",
-                "auroc": 0.941,
-                "auprc": 0.951,
-                "lead_time_advantage_hours": 0.0,
-                "lead_time_range": "0 hrs (Instantaneous/Reactive)"
-            },
-            "rule_qsofa": {
-                "name": "Rule-Based qSOFA",
-                "auroc": 0.878,
-                "auprc": 0.893,
-                "lead_time_advantage_hours": 0.0,
-                "lead_time_range": "0 hrs (Reactive)"
-            }
-        }
+        self.benchmark_results = self._load_benchmark_results()
         self.is_trained = False
+
+    def _load_benchmark_results(self) -> Dict:
+        """Loads computed benchmark results from artifacts/gap1_results.json (no hardcoding)."""
+        json_path = os.path.join("artifacts", "gap1_results.json")
+        if os.path.exists(json_path):
+            try:
+                with open(json_path, "r") as f:
+                    data = json.load(f)
+                    return data.get("model_metrics", {})
+            except Exception as e:
+                print(f"[TemporalRiskPredictor] Warning: could not load {json_path}: {e}")
+        return {}
 
     def _init_model(self):
         if self.model_type == "lightgbm" and HAS_LIGHTGBM:

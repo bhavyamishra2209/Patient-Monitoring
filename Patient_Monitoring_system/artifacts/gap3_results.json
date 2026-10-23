@@ -1,0 +1,442 @@
+{
+  "benchmark_N10_K2": {
+    "fifo": {
+      "policy": "fifo",
+      "n_beds": 10,
+      "k_reviews": 2,
+      "capacity_ratio_K_over_N": 0.2,
+      "pct_septic_reviewed_before_onset": 100.0,
+      "mean_lead_before_onset_hours": 22.33,
+      "missed_onsets": 0,
+      "total_septic_patients": 3,
+      "mean_wait_hours": 3.79,
+      "policy_label": "FIFO (Wait Queue)"
+    },
+    "greedy_news2": {
+      "policy": "greedy_news2",
+      "n_beds": 10,
+      "k_reviews": 2,
+      "capacity_ratio_K_over_N": 0.2,
+      "pct_septic_reviewed_before_onset": 100.0,
+      "mean_lead_before_onset_hours": 1.67,
+      "missed_onsets": 0,
+      "total_septic_patients": 3,
+      "mean_wait_hours": 2.6,
+      "policy_label": "Greedy-by-NEWS2 (Rule)"
+    },
+    "greedy_ml": {
+      "policy": "greedy_ml",
+      "n_beds": 10,
+      "k_reviews": 2,
+      "capacity_ratio_K_over_N": 0.2,
+      "pct_septic_reviewed_before_onset": 100.0,
+      "mean_lead_before_onset_hours": 23.67,
+      "missed_onsets": 0,
+      "total_septic_patients": 3,
+      "mean_wait_hours": 0.49,
+      "policy_label": "Greedy-by-ML (Static Acuity)"
+    },
+    "constraint_aware": {
+      "policy": "constraint_aware",
+      "n_beds": 10,
+      "k_reviews": 2,
+      "capacity_ratio_K_over_N": 0.2,
+      "pct_septic_reviewed_before_onset": 100.0,
+      "mean_lead_before_onset_hours": 23.67,
+      "missed_onsets": 0,
+      "total_septic_patients": 3,
+      "mean_wait_hours": 0.86,
+      "policy_label": "Constraint-Aware (Ours - Gap 3)"
+    }
+  },
+  "n_sweep": {
+    "n_values": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "k_fixed": 2,
+    "results": {
+      "fifo": [
+        {
+          "policy": "fifo",
+          "n_beds": 5,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 2,
+          "mean_wait_hours": 1.46
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 22.33,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 3.79
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 15,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.13,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 20.8,
+          "missed_onsets": 0,
+          "total_septic_patients": 5,
+          "mean_wait_hours": 5.99
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 20,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 19.29,
+          "missed_onsets": 0,
+          "total_septic_patients": 7,
+          "mean_wait_hours": 8.06
+        }
+      ],
+      "greedy_news2": [
+        {
+          "policy": "greedy_news2",
+          "n_beds": 5,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 22.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 2,
+          "mean_wait_hours": 0.97
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 1.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 2.6
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 15,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.13,
+          "pct_septic_reviewed_before_onset": 80.0,
+          "mean_lead_before_onset_hours": 1.5,
+          "missed_onsets": 1,
+          "total_septic_patients": 5,
+          "mean_wait_hours": 4.46
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 20,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 57.1,
+          "mean_lead_before_onset_hours": 1.5,
+          "missed_onsets": 3,
+          "total_septic_patients": 7,
+          "mean_wait_hours": 5.93
+        }
+      ],
+      "greedy_ml": [
+        {
+          "policy": "greedy_ml",
+          "n_beds": 5,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 2,
+          "mean_wait_hours": 0.0
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.49
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 15,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.13,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.2,
+          "missed_onsets": 0,
+          "total_septic_patients": 5,
+          "mean_wait_hours": 1.46
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 20,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 22.71,
+          "missed_onsets": 0,
+          "total_septic_patients": 7,
+          "mean_wait_hours": 2.41
+        }
+      ],
+      "constraint_aware": [
+        {
+          "policy": "constraint_aware",
+          "n_beds": 5,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 2,
+          "mean_wait_hours": 1.45
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.86
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 15,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.13,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.2,
+          "missed_onsets": 0,
+          "total_septic_patients": 5,
+          "mean_wait_hours": 2.21
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 20,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 22.71,
+          "missed_onsets": 0,
+          "total_septic_patients": 7,
+          "mean_wait_hours": 2.78
+        }
+      ]
+    }
+  },
+  "k_sweep": {
+    "k_values": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "n_fixed": 10,
+    "results": {
+      "fifo": [
+        {
+          "policy": "fifo",
+          "n_beds": 10,
+          "k_reviews": 1,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 20.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 8.06
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 22.33,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 3.79
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 10,
+          "k_reviews": 3,
+          "capacity_ratio_K_over_N": 0.3,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 2.25
+        },
+        {
+          "policy": "fifo",
+          "n_beds": 10,
+          "k_reviews": 4,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.33,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.46
+        }
+      ],
+      "greedy_news2": [
+        {
+          "policy": "greedy_news2",
+          "n_beds": 10,
+          "k_reviews": 1,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 66.7,
+          "mean_lead_before_onset_hours": 1.5,
+          "missed_onsets": 1,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 5.83
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 1.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 2.6
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 10,
+          "k_reviews": 3,
+          "capacity_ratio_K_over_N": 0.3,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 2.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.48
+        },
+        {
+          "policy": "greedy_news2",
+          "n_beds": 10,
+          "k_reviews": 4,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 15.33,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.36
+        }
+      ],
+      "greedy_ml": [
+        {
+          "policy": "greedy_ml",
+          "n_beds": 10,
+          "k_reviews": 1,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.94
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.49
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 10,
+          "k_reviews": 3,
+          "capacity_ratio_K_over_N": 0.3,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.0
+        },
+        {
+          "policy": "greedy_ml",
+          "n_beds": 10,
+          "k_reviews": 4,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.39
+        }
+      ],
+      "constraint_aware": [
+        {
+          "policy": "constraint_aware",
+          "n_beds": 10,
+          "k_reviews": 1,
+          "capacity_ratio_K_over_N": 0.1,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 2.69
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 10,
+          "k_reviews": 2,
+          "capacity_ratio_K_over_N": 0.2,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 23.67,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.86
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 10,
+          "k_reviews": 3,
+          "capacity_ratio_K_over_N": 0.3,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 0.0
+        },
+        {
+          "policy": "constraint_aware",
+          "n_beds": 10,
+          "k_reviews": 4,
+          "capacity_ratio_K_over_N": 0.4,
+          "pct_septic_reviewed_before_onset": 100.0,
+          "mean_lead_before_onset_hours": 24.0,
+          "missed_onsets": 0,
+          "total_septic_patients": 3,
+          "mean_wait_hours": 1.42
+        }
+      ]
+    }
+  }
+}

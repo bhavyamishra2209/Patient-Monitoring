@@ -1,0 +1,415 @@
+{
+  "alert_threshold_gap1": 0.8854,
+  "validity_threshold_gap2": 0.5,
+  "test_patient_hours": 120,
+  "test_patient_days": 5.0,
+  "before_filtering": {
+    "total_alerts": 9,
+    "true_alerts": 1,
+    "false_alarms": 8,
+    "alerts_per_patient_day": 1.8,
+    "ppv": 0.1111,
+    "sensitivity": 1.0
+  },
+  "after_filtering": {
+    "total_alerts": 9,
+    "true_alerts": 1,
+    "false_alarms": 8,
+    "alerts_per_patient_day": 1.8,
+    "ppv": 0.1111,
+    "sensitivity_retained": 1.0,
+    "false_alarm_reduction_percent": 0.0
+  },
+  "fairness_audit": {
+    "gender": {
+      "Female (0)": {
+        "n_hours": 24,
+        "n_patients": 1,
+        "auroc": 0.477,
+        "false_alarm_rate": 0.444
+      },
+      "Male (1)": {
+        "n_hours": 96,
+        "n_patients": 2,
+        "auroc": "N/A (single class)",
+        "false_alarm_rate": 0.0
+      }
+    },
+    "age_band": {
+      "<50": {
+        "n_hours": 96,
+        "n_patients": 2,
+        "auroc": "N/A (single class)",
+        "false_alarm_rate": 0.0
+      },
+      ">70": {
+        "n_hours": 24,
+        "n_patients": 1,
+        "auroc": 0.477,
+        "false_alarm_rate": 0.444
+      }
+    }
+  },
+  "sample_alert_explanations": [
+    {
+      "patient_id": "p000016",
+      "ICULOS": 9,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 79.25,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.32,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.43,
+          "shap_impact": 1.1499,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.21,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.0,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 10,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 79.37,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.34,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.5,
+          "shap_impact": 1.1499,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.32,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.0,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 11,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 78.93,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.37,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.53,
+          "shap_impact": 1.1499,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.33,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.01,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 12,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 79.06,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.38,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.55,
+          "shap_impact": 1.15,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.24,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.01,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 13,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 78.99,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.4,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.55,
+          "shap_impact": 1.15,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.22,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.01,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 14,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 78.81,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.42,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.53,
+          "shap_impact": 1.15,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.24,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.01,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 15,
+      "gap1_risk_prob": 0.8967,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 78.87,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.43,
+          "shap_impact": 1.3991,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.47,
+          "shap_impact": 1.15,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.1,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "body_temperature_c_slope_12h",
+          "value": -0.0,
+          "shap_impact": -0.3063,
+          "direction": "protective"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 17,
+      "gap1_risk_prob": 0.9451,
+      "validity_score": 0.9558,
+      "is_valid_alert": false,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 79.47,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.45,
+          "shap_impact": 1.5521,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.37,
+          "shap_impact": 1.3765,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.02,
+          "shap_impact": 0.2709,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "shock_index_std_12h",
+          "value": 0.01,
+          "shap_impact": 0.1329,
+          "direction": "escalates_risk"
+        }
+      ]
+    },
+    {
+      "patient_id": "p000016",
+      "ICULOS": 20,
+      "gap1_risk_prob": 0.9509,
+      "validity_score": 0.9558,
+      "is_valid_alert": true,
+      "filtered_action": "ESCALATED_TRUE_ALERT",
+      "top_5_shap_reasons": [
+        {
+          "feature": "mean_arterial_pressure",
+          "value": 79.63,
+          "shap_impact": 2.2874,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_12h",
+          "value": 97.43,
+          "shap_impact": 1.5875,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_mean_4h",
+          "value": 97.34,
+          "shap_impact": 1.4041,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "spo2_percent_delta_baseline",
+          "value": 0.11,
+          "shap_impact": 0.3246,
+          "direction": "escalates_risk"
+        },
+        {
+          "feature": "shock_index_std_12h",
+          "value": 0.01,
+          "shap_impact": 0.1329,
+          "direction": "escalates_risk"
+        }
+      ]
+    }
+  ]
+}

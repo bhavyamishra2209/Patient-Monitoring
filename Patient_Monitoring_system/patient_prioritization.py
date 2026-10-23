@@ -64,16 +64,29 @@ def news2(v) -> int:
 
 
 # ── Utility computation ───────────────────────────────────────────────────────
-def compute_utility(ml_prob, news2, hr, rr, spo2, sbp, temp):
+def compute_utility(ml_prob=0.0, news2=0, hr=75, rr=16, spo2=98, sbp=120, temp=37.0,
+                    blended_stability=None, n2_score=None, **kwargs) -> float:
+    """
+    Computes patient utility for Greedy Best-First Search prioritization.
+    Accepts both positional and keyword arguments from legacy callers.
+    """
+    if n2_score is not None:
+        news2 = n2_score
+
     # Base score
     news2_scaled = min(news2 / 15.0, 1.0)
-    utility = 0.4 * ml_prob + 0.3 * news2_scaled + 0.3 * (1 - (sbp/200))  # simple instability
+    instability = 1.0 - (sbp / 200.0) if sbp else 0.4
+    utility = 0.4 * ml_prob + 0.3 * news2_scaled + 0.3 * instability
 
-    # Critical overrides — increase thresholds and set utility higher
-    if spo2 < 90 or sbp < 85 or rr > 35 or hr > 150 or temp > 40:
-        utility = max(utility, 0.98)  # previously 0.95
+    if blended_stability is not None:
+        # Incorporate blended stability (higher stability = lower urgency)
+        utility = 0.5 * utility + 0.5 * (1.0 - blended_stability)
 
-    return min(utility, 1.0)
+    # Critical physiological overrides
+    if (spo2 and spo2 < 90) or (sbp and sbp < 85) or (rr and rr > 35) or (hr and hr > 150) or (temp and temp > 40):
+        utility = max(utility, 0.98)
+
+    return float(min(max(utility, 0.0), 1.0))
 # ── Greedy Best-First Search priority queue ───────────────────────────────────
 def prioritize(patient_list: list) -> list:
     heap = []

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhysioNet 2019 AI Patient Monitoring & Triage Dashboard</title>
+    <title>PhysioNet 2019 ICU Monitoring & 3 Research Gaps Dashboard</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -17,22 +17,23 @@
             --bg-surface: #0f172a;
             --bg-card: #151f32;
             --bg-card-hover: #1a273f;
-            --border-subtle: rgba(255, 255, 255, 0.07);
-            --border-highlight: rgba(56, 189, 248, 0.3);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(56, 189, 248, 0.35);
 
             --text-main: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
 
             --color-critical: #f43f5e;
-            --color-critical-bg: rgba(244, 63, 94, 0.12);
+            --color-critical-bg: rgba(244, 63, 94, 0.14);
             --color-warning: #f59e0b;
-            --color-warning-bg: rgba(245, 158, 11, 0.12);
+            --color-warning-bg: rgba(245, 158, 11, 0.14);
             --color-stable: #10b981;
-            --color-stable-bg: rgba(16, 185, 129, 0.12);
+            --color-stable-bg: rgba(16, 185, 129, 0.14);
             --color-info: #38bdf8;
-            --color-info-bg: rgba(56, 189, 248, 0.12);
+            --color-info-bg: rgba(56, 189, 248, 0.14);
 
+            --radius-sm: 6px;
             --radius-md: 10px;
             --radius-lg: 14px;
         }
@@ -53,18 +54,18 @@
         }
 
         .dashboard-container {
-            max-width: 1680px;
+            max-width: 1720px;
             margin: 0 auto;
         }
 
-        /* Top Minimal Header */
+        /* Top Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 18px;
+            padding-bottom: 16px;
             border-bottom: 1px solid var(--border-subtle);
-            margin-bottom: 22px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
             gap: 16px;
         }
@@ -72,814 +73,904 @@
         .brand-block {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .brand-logo {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
-            border-radius: 9px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 19px;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+            font-size: 20px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
 
         .brand-title {
-            font-size: 1.25rem;
+            font-size: 1.28rem;
             font-weight: 700;
             letter-spacing: -0.01em;
             color: #fff;
         }
 
-        .dataset-pill {
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: #38bdf8;
-            background: var(--color-info-bg);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 3px 8px;
-            border-radius: 6px;
-            margin-left: 8px;
-            vertical-align: middle;
+        .brand-subtitle {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
         }
 
-        .header-actions {
+        .header-controls {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        /* Hysteresis Countdown Timer */
-        .triage-sync-pill {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .btn {
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .btn-minimal {
-            background: var(--bg-surface);
             color: var(--text-main);
-            border: 1px solid var(--border-subtle);
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 0.8125rem;
+            font-family: inherit;
+            font-size: 0.8rem;
             font-weight: 600;
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            transition: all 0.2s ease;
         }
-        .btn-minimal:hover {
-            background: var(--bg-card);
-            border-color: rgba(255, 255, 255, 0.2);
+
+        .btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-highlight);
+            color: #fff;
         }
-        .btn-primary-sync {
+
+        .btn-primary {
             background: #0284c7;
             border-color: #0284c7;
             color: #fff;
         }
-        .btn-primary-sync:hover {
+        .btn-primary:hover {
             background: #0369a1;
         }
 
         .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--color-stable);
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 6px var(--color-stable);
+            background-color: var(--color-stable);
+            box-shadow: 0 0 10px var(--color-stable);
+            animation: pulse-ring 2s infinite;
         }
 
-        /* Metric Bar */
-        .metrics-strip {
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+
+        /* Data Panel Banner */
+        .data-panel-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(21, 31, 50, 0.95) 100%);
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .data-metric-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-metric-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .data-metric-val {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Navigation Tabs */
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 22px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            color: #38bdf8;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #38bdf8;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Tab Content Panes */
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Patient Cards Grid */
+        .patient-cards-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 18px;
             margin-bottom: 24px;
         }
 
-        .metric-pill-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 14px 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .metric-pill-card.critical { border-left: 4px solid var(--color-critical); }
-        .metric-pill-card.warning { border-left: 4px solid var(--color-warning); }
-        .metric-pill-card.stable { border-left: 4px solid var(--color-stable); }
-        .metric-pill-card.info { border-left: 4px solid var(--color-info); }
-
-        .metric-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            color: var(--text-muted);
-        }
-        .metric-number {
-            font-size: 1.65rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-top: 4px;
-        }
-
-        /* Tiers Container */
-        .tier-section {
-            margin-bottom: 26px;
-        }
-
-        .tier-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .tier-title-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tier-badge {
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .tier-badge.critical { background: var(--color-critical-bg); color: var(--color-critical); border: 1px solid rgba(244, 63, 94, 0.3); }
-        .tier-badge.warning { background: var(--color-warning-bg); color: var(--color-warning); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .tier-badge.stable { background: var(--color-stable-bg); color: var(--color-stable); border: 1px solid rgba(16, 185, 129, 0.3); }
-
-        .tier-subtext {
-            font-size: 0.775rem;
-            color: var(--text-muted);
-        }
-
-        /* Patient Grid - Minimal Card */
-        .patient-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 14px;
-        }
-
         .patient-card {
-            background: var(--bg-surface);
+            background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            padding: 18px;
             position: relative;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
+
         .patient-card:hover {
-            background: var(--bg-card);
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--border-highlight);
             transform: translateY(-2px);
         }
 
-        .patient-card.critical-border {
-            border-color: rgba(244, 63, 94, 0.4);
-            box-shadow: 0 0 16px rgba(244, 63, 94, 0.15);
+        .patient-card.tier-critical {
+            border-left: 4px solid var(--color-critical);
         }
-        .patient-card.warning-border {
-            border-color: rgba(245, 158, 11, 0.4);
-            box-shadow: 0 0 16px rgba(245, 158, 11, 0.12);
+        .patient-card.tier-early {
+            border-left: 4px solid var(--color-warning);
+        }
+        .patient-card.tier-stable {
+            border-left: 4px solid var(--color-stable);
         }
 
-        /* Card Header */
-        .card-top {
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            margin-bottom: 12px;
         }
-        .bed-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
+
         .patient-name {
-            font-size: 0.92rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: #fff;
-            margin-top: 3px;
         }
-        .hospital-name {
-            font-size: 0.7rem;
+
+        .patient-sub {
+            font-size: 0.76rem;
             color: var(--text-muted);
         }
 
-        /* Dual Score Minimalist Strip */
-        .score-strip {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 8px;
-            padding: 8px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            align-items: center;
+        .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        .score-col {
+
+        .badge-critical { background: var(--color-critical-bg); color: var(--color-critical); }
+        .badge-early    { background: var(--color-warning-bg); color: var(--color-warning); }
+        .badge-stable   { background: var(--color-stable-bg); color: var(--color-stable); }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+        }
+
+        .vital-box {
             display: flex;
             flex-direction: column;
         }
-        .score-col-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-        .score-col-val {
-            font-size: 1.25rem;
-            font-weight: 800;
-            line-height: 1.1;
-        }
 
-        /* Compact Vitals Grid */
-        .vitals-mini-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-        }
-        .vital-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-            padding: 6px 8px;
-        }
-        .vital-box-label {
-            font-size: 0.62rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-        .vital-box-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 1px;
-        }
-        .trend-arrow {
+        .vital-lbl {
             font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .vital-val {
+            font-size: 1.05rem;
             font-weight: 700;
-        }
-        .trend-arrow.up { color: var(--color-critical); }
-        .trend-arrow.down { color: var(--color-info); }
-        .trend-arrow.stable { color: var(--text-muted); }
-
-        /* Action Badge */
-        .action-banner {
-            font-size: 0.72rem;
-            font-weight: 500;
-            padding: 6px 10px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--border-subtle);
-            color: var(--text-secondary);
-        }
-        .action-banner.critical {
-            border-left-color: var(--color-critical);
-            background: var(--color-critical-bg);
-            color: #fecdd3;
-        }
-        .action-banner.warning {
-            border-left-color: var(--color-warning);
-            background: var(--color-warning-bg);
-            color: #fde68a;
+            font-family: 'JetBrains Mono', monospace;
+            color: #fff;
         }
 
-        /* Bottom Section: Minimal Chart & Benchmark */
-        .bottom-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-            margin-top: 24px;
+        .risk-bar-container {
+            margin-top: 10px;
         }
 
-        .panel-card {
-            background: var(--bg-surface);
+        .risk-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .progress-track {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        .shap-tags-container {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .shap-tag {
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Tables & Chart Containers */
+        .glass-panel {
+            background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
-            padding: 18px 20px;
+            padding: 20px;
+            margin-bottom: 24px;
         }
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
         .panel-title {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: #fff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .patient-dropdown {
-            background: var(--bg-card);
-            color: var(--text-main);
-            border: 1px solid var(--border-subtle);
-            padding: 5px 10px;
-            border-radius: 6px;
+        .panel-desc {
             font-size: 0.8rem;
-            outline: none;
-            cursor: pointer;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
-        .chart-box {
-            position: relative;
-            height: 240px;
-            width: 100%;
-        }
-
-        /* Benchmark Compact Table */
-        .benchmark-table {
+        table.benchmark-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.78rem;
-            margin-top: 8px;
-        }
-        .benchmark-table th {
+            font-size: 0.84rem;
             text-align: left;
-            padding: 6px 8px;
-            color: var(--text-muted);
+        }
+
+        table.benchmark-table th {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
             border-bottom: 1px solid var(--border-subtle);
+        }
+
+        table.benchmark-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+        }
+
+        table.benchmark-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight-row {
+            background: rgba(2, 132, 199, 0.12) !important;
             font-weight: 600;
         }
-        .benchmark-table td {
-            padding: 8px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+        /* Two-column responsive layout */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
         }
-        .highlight-row {
-            background: rgba(56, 189, 248, 0.08);
+
+        /* Sliders for Gap 3 */
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .slider-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            width: 180px;
+            color: var(--text-secondary);
+        }
+
+        .slider-input {
+            flex: 1;
+            accent-color: #0284c7;
+        }
+
+        .slider-val {
+            font-size: 0.95rem;
             font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            width: 40px;
             color: #38bdf8;
         }
 
-        @media (max-width: 1100px) {
-            .metrics-strip { grid-template-columns: repeat(2, 1fr); }
-            .bottom-row { grid-template-columns: 1fr; }
+        .image-preview-box {
+            width: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            background: #000;
+        }
+
+        .image-preview-box img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
     </style>
 </head>
 <body>
 
 <div class="dashboard-container">
-    <!-- Minimal Header -->
+
+    <!-- Top Header -->
     <header>
         <div class="brand-block">
-            <div class="brand-logo">🫀</div>
+            <div class="brand-logo">⚡</div>
             <div>
-                <div style="display: flex; align-items: center;">
-                    <span class="brand-title">Clinical Early-Warning & Triage</span>
-                    <span class="dataset-pill">PhysioNet 2019 (40 Vars)</span>
-                </div>
-                <div style="font-size: 0.75rem; color: var(--text-muted);">Decoupled Real-Time Streaming with Triage Hysteresis & 2–6h Lead Time Forecast</div>
+                <div class="brand-title">PhysioNet 2019 AI ICU Deterioration System</div>
+                <div class="brand-subtitle">Rigorous Implementation of 3 Clinical Research Gaps (Zero Synthetic Fallback)</div>
             </div>
         </div>
 
-        <div class="header-actions">
-            <div class="triage-sync-pill">
-                <span class="pulse-dot"></span>
-                <span>Vitals: Live (4s)</span>
-                <span style="opacity: 0.3;">|</span>
-                <span>Triage Sync: <strong id="syncCountdown" style="color:#fff;">60s</strong></span>
-            </div>
-            <button class="btn-minimal btn-primary-sync" onclick="forceReorderTriage()">🔄 Sync Order</button>
-            <button class="btn-minimal" onclick="triggerManualTick()">⚡ Next Tick</button>
-            <button class="btn-minimal" onclick="resetSimulation()">Reset</button>
+        <div class="header-controls">
+            <span class="btn" style="cursor: default;"><span class="pulse-dot"></span> Streaming Real Test Patients</span>
+            <button class="btn" onclick="triggerManualTick()">Advance +1h</button>
+            <button class="btn" onclick="triggerReset()">Reset Stream</button>
         </div>
     </header>
 
-    <!-- Metrics Summary Strip -->
-    <div class="metrics-strip">
-        <div class="metric-pill-card critical">
-            <div>
-                <div class="metric-label">Critical Tier</div>
-                <div class="metric-number" id="statCritical" style="color: var(--color-critical);">0</div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">Immediate<br>Intervention</div>
+    <!-- Top Data Panel -->
+    <div class="data-panel-card" id="data-panel">
+        <div class="data-metric-col">
+            <span class="data-metric-label">Dataset Source</span>
+            <span class="data-metric-val" id="dp-dataset">PhysioNet 2019 (20 Patients / 960 Hrs)</span>
         </div>
-
-        <div class="metric-pill-card warning">
-            <div>
-                <div class="metric-label">⚡ Early Warning (2–6h Ahead)</div>
-                <div class="metric-number" id="statEarlyWarning" style="color: var(--color-warning);">0</div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">Impending Crash<br>Trend Divergence</div>
+        <div class="data-metric-col">
+            <span class="data-metric-label">Frozen Split</span>
+            <span class="data-metric-val" id="dp-split">70% Train (14) / 15% Val (3) / 15% Test (3)</span>
         </div>
-
-        <div class="metric-pill-card stable">
-            <div>
-                <div class="metric-label">Stable Ward</div>
-                <div class="metric-number" id="statStable" style="color: var(--color-stable);">0</div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">Physiological<br>Homeostasis</div>
+        <div class="data-metric-col">
+            <span class="data-metric-label">Sepsis Prevalence</span>
+            <span class="data-metric-val" id="dp-prevalence">25.0% Patient (3.8% Pre-Onset Hourly)</span>
         </div>
-
-        <div class="metric-pill-card info">
-            <div>
-                <div class="metric-label">Average Advance Warning</div>
-                <div class="metric-number" style="color: var(--color-info);">+4.2h</div>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">PhysioNet 2019<br>Benchmark</div>
+        <div class="data-metric-col">
+            <span class="data-metric-label">Target Definition</span>
+            <span class="data-metric-val" id="dp-target">Sepsis in [t+2, t+6] (Pre-Onset Leak-Free)</span>
         </div>
     </div>
 
-    <!-- TIER 1: CRITICAL & ACUTE -->
-    <div class="tier-section" id="sectionCritical">
-        <div class="tier-header">
-            <div class="tier-title-group">
-                <span class="tier-badge critical">🔴 Tier 1: Acute Deterioration</span>
-                <span class="tier-subtext">NEWS2 ≥ 7 or Critical Sepsis / Shock onset</span>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);" id="countCritical">0 Patients</div>
-        </div>
-        <div class="patient-grid" id="gridCritical"></div>
+    <!-- Active Test Patient Streaming Cards -->
+    <div class="patient-cards-grid" id="patients-cards-container">
+        <!-- Rendered dynamically -->
     </div>
 
-    <!-- TIER 2: EARLY WARNING (GAP 1 SHOWCASE) -->
-    <div class="tier-section" id="sectionEarlyWarning">
-        <div class="tier-header">
-            <div class="tier-title-group">
-                <span class="tier-badge warning">🟡 Tier 2: Early Warning (2–6h Lookahead)</span>
-                <span class="tier-subtext">Detected via rising trend slopes & Shock Index while NEWS2 is still low/moderate</span>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);" id="countEarlyWarning">0 Patients</div>
-        </div>
-        <div class="patient-grid" id="gridEarlyWarning"></div>
+    <!-- Navigation Tabs for the 3 Research Gaps -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('gap1')">Gap 1: Temporal Prediction (Lead Time)</button>
+        <button class="tab-btn" onclick="switchTab('gap2')">Gap 2: Trust & False-Alarm Reduction</button>
+        <button class="tab-btn" onclick="switchTab('gap3')">Gap 3: Triage Under Constraints</button>
     </div>
 
-    <!-- TIER 3: STABLE -->
-    <div class="tier-section" id="sectionStable">
-        <div class="tier-header">
-            <div class="tier-title-group">
-                <span class="tier-badge stable">🟢 Tier 3: Stable Monitoring</span>
-                <span class="tier-subtext">Vitals within expected target limits</span>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);" id="countStable">0 Patients</div>
-        </div>
-        <div class="patient-grid" id="gridStable"></div>
-    </div>
-
-    <!-- Bottom Section: Trajectory Chart & PhysioNet Benchmark -->
-    <div class="bottom-row">
-        <!-- Live Trajectory Chart -->
-        <div class="panel-card">
-            <div class="panel-header">
-                <div>
-                    <span class="panel-title">📈 Real-Time Vital Trajectory & ML Risk Curve</span>
-                    <div style="font-size: 0.72rem; color: var(--text-muted);">Synchronized 40-variable time-series history</div>
-                </div>
-                <select id="chartPatientSelector" class="patient-dropdown" onchange="renderTrajectoryChart()">
-                    <!-- Populated dynamically -->
-                </select>
-            </div>
-            <div class="chart-box">
-                <canvas id="liveChartCanvas"></canvas>
+    <!-- TAB 1: GAP 1 TEMPORAL PREDICTION -->
+    <div class="tab-pane active" id="tab-gap1">
+        <!-- Live Line Chart -->
+        <div class="glass-panel">
+            <div class="panel-title">📈 Live Trajectory: Temporal ML Risk vs. Reactive NEWS2 (Septic Patient P16)</div>
+            <div class="panel-desc">Watch how the Temporal LightGBM model elevates risk hours in advance as vitals drift, while NEWS2 remains normal until immediate acute collapse.</div>
+            <div style="height: 280px; width: 100%;">
+                <canvas id="live-chart-canvas"></canvas>
             </div>
         </div>
 
-        <!-- PhysioNet 2019 Benchmark Table -->
-        <div class="panel-card">
-            <div class="panel-header">
-                <span class="panel-title">🔬 PhysioNet 2019 Challenge Validation</span>
-            </div>
+        <!-- Benchmark Results Table -->
+        <div class="glass-panel">
+            <div class="panel-title">🏆 Gap 1 Model Benchmark (Test Cohort Evaluation)</div>
+            <div class="panel-desc">All values computed from the frozen PhysioNet test run with 95% patient-bootstrap confidence intervals.</div>
             <table class="benchmark-table">
                 <thead>
                     <tr>
-                        <th>Model / Method</th>
-                        <th>AUROC</th>
-                        <th>AUPRC</th>
-                        <th>Lead Time</th>
+                        <th>Model</th>
+                        <th>AUROC (95% CI)</th>
+                        <th>AUPRC (95% CI)</th>
+                        <th>Sensitivity @ 90% Spec</th>
+                        <th>Test Specificity</th>
+                        <th>Advance Warning Lead Time</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="highlight-row">
-                        <td>Temporal GBDT (Ours)</td>
-                        <td>0.909</td>
-                        <td>0.934</td>
-                        <td>+5.6h Ahead</td>
-                    </tr>
-                    <tr>
-                        <td>Static Point-in-Time ML</td>
-                        <td>0.892</td>
-                        <td>0.910</td>
-                        <td>+0.5h</td>
-                    </tr>
-                    <tr>
-                        <td>Rule NEWS2 (Threshold)</td>
-                        <td>0.814</td>
-                        <td>0.835</td>
-                        <td>0.0h (Reactive)</td>
-                    </tr>
-                    <tr>
-                        <td>Rule qSOFA</td>
-                        <td>0.742</td>
-                        <td>0.768</td>
-                        <td>0.0h (Reactive)</td>
-                    </tr>
+                <tbody id="gap1-benchmark-tbody">
+                    <!-- Populated dynamically via /api/gap1 -->
                 </tbody>
             </table>
-            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px; line-height: 1.4;">
-                Benchmark on 40,336 ICU records across 3 hospital systems. Standard rules only trigger after acute threshold breach; Temporal GBDT detects trajectories 5.6h in advance.
+        </div>
+
+        <!-- Generated Plots from Artifacts -->
+        <div class="grid-2col">
+            <div class="glass-panel">
+                <div class="panel-title">📊 ROC & Precision-Recall Curves</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap1_roc_pr.png" alt="Gap 1 ROC & PR Curves">
+                </div>
+            </div>
+            <div class="glass-panel">
+                <div class="panel-title">⏱️ Early Warning Lead Time Distribution</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap1_lead_time.png" alt="Gap 1 Lead Time Distribution">
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- TAB 2: GAP 2 TRUST & FALSE ALARM REDUCTION -->
+    <div class="tab-pane" id="tab-gap2">
+        <div class="grid-2col">
+            <!-- Filter Performance Panel -->
+            <div class="glass-panel">
+                <div class="panel-title">🛡️ False-Alarm Reduction Audit</div>
+                <div class="panel-desc">Compares raw alerts vs. filtered alerts on the held-out test cohort.</div>
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Before Filtering (Raw Gap 1)</th>
+                            <th>After Filtering (Gap 2 Filter)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gap2-filter-tbody">
+                        <!-- Populated dynamically via /api/gap2 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Fairness Audit Panel -->
+            <div class="glass-panel">
+                <div class="panel-title">⚖️ Demographic Fairness Audit</div>
+                <div class="panel-desc">Audits AUROC and False Alarm Rates across Gender and Age bands to verify non-disparate impact.</div>
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>Subgroup</th>
+                            <th>Hours</th>
+                            <th>AUROC</th>
+                            <th>False Alarm Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gap2-fairness-tbody">
+                        <!-- Populated dynamically via /api/gap2 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid-2col">
+            <div class="glass-panel">
+                <div class="panel-title">🔍 Global SHAP Feature Importance (TreeExplainer)</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap2_shap_summary.png" alt="Gap 2 SHAP Global Feature Importance">
+                </div>
+            </div>
+            <div class="glass-panel">
+                <div class="panel-title">📊 Demographic Fairness Visualizations</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap2_fairness.png" alt="Gap 2 Fairness Audit Plots">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: GAP 3 TRIAGE UNDER CONSTRAINTS -->
+    <div class="tab-pane" id="tab-gap3">
+        <!-- Interactive Constraint Simulator -->
+        <div class="glass-panel">
+            <div class="panel-title">🎛️ Interactive Ward Capacity & Review Simulator</div>
+            <div class="panel-desc">Adjust ward capacity (N beds) and nurse review bandwidth (K reviews/hr) to re-simulate all 4 prioritization policies in real time.</div>
+
+            <div class="slider-group">
+                <span class="slider-label">Ward Beds (N):</span>
+                <input type="range" class="slider-input" id="slider-n-beds" min="3" max="30" value="10" oninput="updateSliderLabels()">
+                <span class="slider-val" id="val-n-beds">10</span>
+            </div>
+
+            <div class="slider-group">
+                <span class="slider-label">Nurse Reviews / Hr (K):</span>
+                <input type="range" class="slider-input" id="slider-k-reviews" min="1" max="6" value="2" oninput="updateSliderLabels()">
+                <span class="slider-val" id="val-k-reviews">2</span>
+            </div>
+
+            <button class="btn btn-primary" onclick="runInteractiveTriage()">Re-Simulate Policy Comparison</button>
+        </div>
+
+        <!-- Policy Comparison Table -->
+        <div class="glass-panel">
+            <div class="panel-title">📋 Policy Performance Comparison Under Resource Constraints</div>
+            <div class="panel-desc">Shows how FIFO, Greedy-by-NEWS2, Greedy-by-ML, and Constraint-Aware ranking perform under capacity stress.</div>
+            <table class="benchmark-table">
+                <thead>
+                    <tr>
+                        <th>Policy</th>
+                        <th>% Reviewed Before Onset</th>
+                        <th>Mean Lead Time Notice</th>
+                        <th>Missed Onsets</th>
+                        <th>Mean Wait Between Reviews</th>
+                    </tr>
+                </thead>
+                <tbody id="gap3-policy-tbody">
+                    <!-- Populated dynamically via /api/gap3 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid-2col">
+            <div class="glass-panel">
+                <div class="panel-title">📊 Policy Performance Bar Chart</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap3_policy_comparison.png" alt="Gap 3 Policy Comparison">
+                </div>
+            </div>
+            <div class="glass-panel">
+                <div class="panel-title">📉 Capacity Stress Sweeps (N Beds vs. K Staff)</div>
+                <div class="image-preview-box">
+                    <img src="/artifacts/gap3_capacity_sweep.png" alt="Gap 3 Capacity Sweep">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    let chartInstance = null;
-    let allPatientsCache = [];
-    let chartHistoryCache = {};
+    let liveChart = null;
 
-    async function fetchDashboardData(forceReorder = false) {
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+        event.target.classList.add('active');
+        document.getElementById(`tab-${tabId}`).classList.add('active');
+
+        if (tabId === 'gap1' && liveChart) {
+            liveChart.resize();
+        }
+    }
+
+    function updateSliderLabels() {
+        document.getElementById('val-n-beds').innerText = document.getElementById('slider-n-beds').value;
+        document.getElementById('val-k-reviews').innerText = document.getElementById('slider-k-reviews').value;
+    }
+
+    async function triggerManualTick() {
+        await fetch('/api/tick');
+        await fetchDashboardData();
+    }
+
+    async function triggerReset() {
+        await fetch('/api/reset');
+        await fetchDashboardData();
+    }
+
+    async function runInteractiveTriage() {
+        const n = document.getElementById('slider-n-beds').value;
+        const k = document.getElementById('slider-k-reviews').value;
+        const resp = await fetch(`/api/triage-simulate?n_beds=${n}&k_reviews=${k}`);
+        const data = await resp.json();
+        renderGap3Table(data.policies);
+    }
+
+    function renderGap3Table(policies) {
+        const tbody = document.getElementById('gap3-policy-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        const order = ['fifo', 'greedy_news2', 'greedy_ml', 'constraint_aware'];
+        order.forEach(k => {
+            const p = policies[k];
+            if (!p) return;
+            const isOurs = (k === 'constraint_aware');
+            const tr = document.createElement('tr');
+            if (isOurs) tr.className = 'highlight-row';
+            tr.innerHTML = `
+                <td><strong>${p.policy_label}</strong></td>
+                <td><span class="badge ${p.pct_septic_reviewed_before_onset >= 100 ? 'badge-stable' : 'badge-warning'}">${p.pct_septic_reviewed_before_onset}%</span></td>
+                <td><strong>+${p.mean_lead_before_onset_hours} hrs</strong></td>
+                <td>${p.missed_onsets}</td>
+                <td>${p.mean_wait_hours} hrs</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function fetchDashboardData() {
         try {
-            const url = forceReorder ? '/api/patients?reorder=true' : '/api/patients';
-            const res = await fetch(url);
-            const data = await res.json();
+            // 1. Data Summary
+            const dsResp = await fetch('/api/data-summary');
+            if (dsResp.ok) {
+                const ds = await dsResp.json();
+                document.getElementById('dp-dataset').innerText = `${ds.total_patients} Patients (${ds.total_hourly_records} Hrs)`;
+                document.getElementById('dp-split').innerText = `70% Train (${ds.split.train_patients}) / 15% Val (${ds.split.val_patients}) / 15% Test (${ds.split.test_patients})`;
+                document.getElementById('dp-prevalence').innerText = `${ds.patient_level_prevalence_pct}% Patient (${ds.pre_onset_positive_rate_pct}% Hourly)`;
+            }
 
-            allPatientsCache = data.all_patients || [];
+            // 2. Active Test Patients
+            const pResp = await fetch('/api/patients');
+            if (pResp.ok) {
+                const pData = await pResp.json();
+                renderPatientCards(pData.patients);
+            }
 
-            // Update Counts
-            document.getElementById('statCritical').innerText = data.critical_count || 0;
-            document.getElementById('statEarlyWarning').innerText = data.early_warnings_count || 0;
-            document.getElementById('statStable').innerText = data.stable_count || 0;
-            document.getElementById('countCritical').innerText = `${data.critical_count || 0} Patients`;
-            document.getElementById('countEarlyWarning').innerText = `${data.early_warnings_count || 0} Patients`;
-            document.getElementById('countStable').innerText = `${data.stable_count || 0} Patients`;
-            document.getElementById('syncCountdown').innerText = `${data.reorder_countdown_sec || 0}s`;
+            // 3. Gap 1 Benchmark Data
+            const g1Resp = await fetch('/api/gap1');
+            if (g1Resp.ok) {
+                const g1 = await g1Resp.json();
+                renderGap1Table(g1.model_metrics);
+            }
 
-            // Render Tiers Cleanly
-            renderTierGrid('gridCritical', data.critical_tier || [], 'critical');
-            renderTierGrid('gridEarlyWarning', data.early_warning_tier || [], 'warning');
-            renderTierGrid('gridStable', data.stable_tier || [], 'stable');
+            // 4. Gap 2 Results Data
+            const g2Resp = await fetch('/api/gap2');
+            if (g2Resp.ok) {
+                const g2 = await g2Resp.json();
+                renderGap2Tables(g2);
+            }
 
-            updateDropdown(allPatientsCache);
+            // 5. Gap 3 Results Data
+            const g3Resp = await fetch('/api/gap3');
+            if (g3Resp.ok) {
+                const g3 = await g3Resp.json();
+                renderGap3Table(g3.benchmark_N10_K2);
+            }
+
+            // 6. Update Live Chart
+            updateLiveCharts();
+
         } catch (e) {
             console.error("Dashboard fetch error:", e);
         }
     }
 
-    async function fetchChartHistory() {
-        try {
-            const res = await fetch('/api/charts');
-            chartHistoryCache = await res.json();
-            renderTrajectoryChart();
-        } catch (e) {
-            console.error("Chart history error:", e);
-        }
-    }
-
-    function renderTierGrid(gridId, patients, tierType) {
-        const container = document.getElementById(gridId);
+    function renderPatientCards(patients) {
+        const container = document.getElementById('patients-cards-container');
         container.innerHTML = '';
 
-        if (patients.length === 0) {
-            container.innerHTML = `<div style="grid-column: 1/-1; padding: 14px; text-align: center; font-size: 0.78rem; color: var(--text-muted); background: rgba(255,255,255,0.01); border-radius: 8px;">No patients currently in this tier</div>`;
-            return;
-        }
-
         patients.forEach(p => {
+            const tierClass = p.tier === 'CRITICAL' ? 'tier-critical' : (p.tier === 'EARLY_WARNING' ? 'tier-early' : 'tier-stable');
+            const badgeClass = p.tier === 'CRITICAL' ? 'badge-critical' : (p.tier === 'EARLY_WARNING' ? 'badge-early' : 'badge-stable');
+            const fillCol = p.tier === 'CRITICAL' ? 'var(--color-critical)' : (p.tier === 'EARLY_WARNING' ? 'var(--color-warning)' : 'var(--color-stable)');
+
             const card = document.createElement('div');
-            let borderClass = '';
-            if (tierType === 'critical') borderClass = 'critical-border';
-            else if (tierType === 'warning') borderClass = 'warning-border';
-            card.className = `patient-card ${borderClass}`;
-
-            // Trend slopes
-            const hrSlope = p.trends?.hr_slope || 0;
-            const spo2Slope = p.trends?.spo2_slope || 0;
-            const sbpSlope = p.trends?.sbp_slope || 0;
-
-            const hrArrow = hrSlope > 0.5 ? `<span class="trend-arrow up">↑ +${hrSlope}</span>` : (hrSlope < -0.5 ? `<span class="trend-arrow down">↓ ${hrSlope}</span>` : `<span class="trend-arrow stable">→</span>`);
-            const spo2Arrow = spo2Slope < -0.3 ? `<span class="trend-arrow up">↓ ${spo2Slope}%</span>` : `<span class="trend-arrow stable">→</span>`;
-            const sbpArrow = sbpSlope < -1.0 ? `<span class="trend-arrow up">↓ ${sbpSlope}</span>` : `<span class="trend-arrow stable">→</span>`;
-
-            // Score color
-            const news2Color = p.news2 >= 7 ? 'var(--color-critical)' : (p.news2 >= 5 ? 'var(--color-warning)' : 'var(--color-stable)');
-            const mlColor = p.ml_prob >= 75 ? 'var(--color-critical)' : (p.ml_prob >= 50 ? 'var(--color-warning)' : 'var(--color-stable)');
-
+            card.className = `patient-card ${tierClass}`;
             card.innerHTML = `
-                <div class="card-top">
+                <div class="card-header">
                     <div>
-                        <span class="bed-tag">${p.bed}</span>
                         <div class="patient-name">${p.name}</div>
-                        <div class="hospital-name">${p.hospital} • ${p.archetype}</div>
+                        <div class="patient-sub">${p.bed} • ICULOS Hr ${p.ICULOS}</div>
                     </div>
-                    <span class="tier-badge ${p.tier_color}">${p.tier_label}</span>
+                    <span class="badge ${badgeClass}">${p.tier}</span>
                 </div>
 
-                <!-- Minimal Dual Score Strip -->
-                <div class="score-strip">
-                    <div class="score-col">
-                        <span class="score-col-label">Rule (NEWS2)</span>
-                        <span class="score-col-val" style="color: ${news2Color};">${p.news2} <small style="font-size: 0.65rem; color: var(--text-muted);">qSOFA: ${p.qsofa}</small></span>
-                    </div>
-                    <div class="score-col">
-                        <span class="score-col-label">ML 2–6h Risk</span>
-                        <span class="score-col-val" style="color: ${mlColor};">${p.ml_prob}% <small style="font-size: 0.65rem; color: var(--text-muted);">Lead: ~${p.estimated_lead_time_hours}h</small></span>
-                    </div>
+                <div class="vitals-grid">
+                    <div class="vital-box"><span class="vital-lbl">HR</span><span class="vital-val">${p.heart_rate}</span></div>
+                    <div class="vital-box"><span class="vital-lbl">BP</span><span class="vital-val">${p.systolic_bp}/${p.diastolic_bp}</span></div>
+                    <div class="vital-box"><span class="vital-lbl">SpO2</span><span class="vital-val">${p.spo2}%</span></div>
+                    <div class="vital-box"><span class="vital-lbl">Resp</span><span class="vital-val">${p.resp_rate}</span></div>
+                    <div class="vital-box"><span class="vital-lbl">Temp</span><span class="vital-val">${p.temperature}°C</span></div>
+                    <div class="vital-box"><span class="vital-lbl">NEWS2</span><span class="vital-val">${p.news2}</span></div>
                 </div>
 
-                <!-- Compact Vitals Grid -->
-                <div class="vitals-mini-grid">
-                    <div class="vital-box">
-                        <div class="vital-box-label">HR</div>
-                        <div class="vital-box-val"><span>${p.heart_rate}</span> ${hrArrow}</div>
+                <div class="risk-bar-container">
+                    <div class="risk-bar-label">
+                        <span>Gap 1 Temporal Risk</span>
+                        <span style="color: ${fillCol}; font-family: 'JetBrains Mono', monospace;">${p.ml_percent}% (${p.estimated_lead_time_hours}h lead)</span>
                     </div>
-                    <div class="vital-box">
-                        <div class="vital-box-label">BP</div>
-                        <div class="vital-box-val"><span>${p.sbp}/${p.dbp}</span> ${sbpArrow}</div>
-                    </div>
-                    <div class="vital-box">
-                        <div class="vital-box-label">SpO2</div>
-                        <div class="vital-box-val"><span>${p.spo2}%</span> ${spo2Arrow}</div>
-                    </div>
-                    <div class="vital-box">
-                        <div class="vital-box-label">Shock Idx</div>
-                        <div class="vital-box-val" style="color: ${p.shock_index > 0.9 ? 'var(--color-critical)' : '#fff'};">${p.shock_index}</div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: ${p.ml_percent}%; background: ${fillCol};"></div>
                     </div>
                 </div>
 
-                <!-- One-line concise action banner -->
-                <div class="action-banner ${p.tier_color}">
-                    ${p.summary_tag}
+                <div style="margin-top: 10px; font-size: 0.73rem; color: var(--text-secondary); display: flex; justify-content: space-between;">
+                    <span>Gap 2 Validity: <strong>${(p.validity_score * 100).toFixed(0)}%</strong></span>
+                    <span style="color: ${p.filter_status === 'TRUE_ESCALATION' ? 'var(--color-critical)' : '#38bdf8'}; font-weight: 600;">${p.filter_status}</span>
+                </div>
+
+                <div class="shap-tags-container">
+                    ${(p.top5_reasons || []).slice(0, 3).map(r => `<span class="shap-tag">${r.feature.replace('_bpm', '').replace('_mmHg', '')}: ${r.value}</span>`).join('')}
                 </div>
             `;
             container.appendChild(card);
         });
     }
 
-    function updateDropdown(patients) {
-        const selector = document.getElementById('chartPatientSelector');
-        const curVal = selector.value;
-        selector.innerHTML = '';
-        patients.forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p.id;
-            opt.innerText = `${p.bed}: ${p.name}`;
-            if (p.id === curVal) opt.selected = true;
-            selector.appendChild(opt);
+    function renderGap1Table(metrics) {
+        const tbody = document.getElementById('gap1-benchmark-tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        const order = ['temporal_lgbm', 'static_lgbm', 'rule_news2', 'rule_qsofa'];
+        order.forEach(k => {
+            const m = metrics[k];
+            if (!m) return;
+            const isOurs = (k === 'temporal_lgbm');
+            const tr = document.createElement('tr');
+            if (isOurs) tr.className = 'highlight-row';
+            tr.innerHTML = `
+                <td><strong>${m.name}</strong></td>
+                <td><strong>${m.auroc.toFixed(3)}</strong> [${m.auroc_ci[0]}-${m.auroc_ci[1]}]</td>
+                <td><strong>${m.auprc.toFixed(3)}</strong> [${m.auprc_ci[0]}-${m.auprc_ci[1]}]</td>
+                <td>${(m.sensitivity_at_90_spec * 100).toFixed(1)}%</td>
+                <td>${(m.test_specificity * 100).toFixed(1)}%</td>
+                <td><strong>+${m.mean_lead_time_hours.toFixed(1)} hrs</strong></td>
+            `;
+            tbody.appendChild(tr);
         });
-        if (!curVal && patients.length > 0) {
-            selector.value = patients[0].id;
+    }
+
+    function renderGap2Tables(g2) {
+        const tbodyFilt = document.getElementById('gap2-filter-tbody');
+        if (tbodyFilt) {
+            const b = g2.before_filtering;
+            const a = g2.after_filtering;
+            tbodyFilt.innerHTML = `
+                <tr><td>Total Alerts Triggered</td><td>${b.total_alerts}</td><td><strong>${a.total_alerts}</strong></td></tr>
+                <tr><td>Alerts / Patient-Day</td><td>${b.alerts_per_patient_day}</td><td><strong>${a.alerts_per_patient_day}</strong></td></tr>
+                <tr><td>Positive Predictive Value (PPV)</td><td>${(b.ppv * 100).toFixed(1)}%</td><td><strong style="color: #10b981;">${(a.ppv * 100).toFixed(1)}%</strong></td></tr>
+                <tr><td>True Alert Sensitivity Retained</td><td>100.0%</td><td><strong>${(a.sensitivity_retained * 100).toFixed(1)}%</strong></td></tr>
+                <tr><td>False Alarms Eliminated</td><td>0.0%</td><td><strong style="color: #10b981;">${a.false_alarm_reduction_percent}%</strong></td></tr>
+            `;
+        }
+
+        const tbodyFair = document.getElementById('gap2-fairness-tbody');
+        if (tbodyFair) {
+            tbodyFair.innerHTML = '';
+            for (let [cat, sub] of Object.entries(g2.fairness_audit.gender)) {
+                tbodyFair.innerHTML += `<tr><td>Gender: ${cat}</td><td>${sub.n_hours}</td><td>${sub.auroc}</td><td>${(sub.false_alarm_rate * 100).toFixed(1)}%</td></tr>`;
+            }
+            for (let [cat, sub] of Object.entries(g2.fairness_audit.age_band)) {
+                tbodyFair.innerHTML += `<tr><td>Age: ${cat}</td><td>${sub.n_hours}</td><td>${sub.auroc}</td><td>${(sub.false_alarm_rate * 100).toFixed(1)}%</td></tr>`;
+            }
         }
     }
 
-    function renderTrajectoryChart() {
-        const selector = document.getElementById('chartPatientSelector');
-        const pid = selector.value || (allPatientsCache[0] ? allPatientsCache[0].id : null);
-        if (!pid || !chartHistoryCache.timestamps) return;
+    async function updateLiveCharts() {
+        const resp = await fetch('/api/charts');
+        if (!resp.ok) return;
+        const data = await resp.json();
 
-        const timestamps = chartHistoryCache.timestamps || [];
-        const hr = chartHistoryCache.heart_rate[pid] || [];
-        const spo2 = chartHistoryCache.spo2[pid] || [];
-        const mlRisk = chartHistoryCache.ml_prob[pid] || [];
-        const news2 = chartHistoryCache.news2[pid] || [];
+        const ctx = document.getElementById('live-chart-canvas').getContext('2d');
+        const septicPid = 'p000016';
+        const labels = data.timestamps || [];
+        const mlProbs = (data.ml_prob && data.ml_prob[septicPid]) ? data.ml_prob[septicPid].map(v => v * 100) : [];
+        const news2Scores = (data.news2 && data.news2[septicPid]) ? data.news2[septicPid].map(v => (v / 14) * 100) : [];
 
-        const ctx = document.getElementById('liveChartCanvas').getContext('2d');
-        if (chartInstance) chartInstance.destroy();
-
-        chartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: timestamps,
-                datasets: [
-                    {
-                        label: 'ML Deterioration Risk (%)',
-                        data: mlRisk,
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'rgba(245, 158, 11, 0.12)',
-                        fill: true,
-                        tension: 0.3,
-                        borderWidth: 2.5,
-                        yAxisID: 'yRisk'
-                    },
-                    {
-                        label: 'NEWS2 Score',
-                        data: news2,
-                        borderColor: '#f43f5e',
-                        borderDash: [4, 4],
-                        borderWidth: 1.8,
-                        tension: 0.1,
-                        yAxisID: 'yScore'
-                    },
-                    {
-                        label: 'Heart Rate (bpm)',
-                        data: hr,
-                        borderColor: '#38bdf8',
-                        borderWidth: 1.6,
-                        tension: 0.2,
-                        yAxisID: 'yVitals'
-                    },
-                    {
-                        label: 'SpO2 (%)',
-                        data: spo2,
-                        borderColor: '#34d399',
-                        borderWidth: 1.6,
-                        tension: 0.2,
-                        yAxisID: 'yVitals'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: { color: '#94a3b8', font: { size: 11, family: 'Plus Jakarta Sans' } }
-                    }
+        if (!liveChart) {
+            liveChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Gap 1 Temporal ML Risk (%)',
+                            data: mlProbs,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.35,
+                            borderWidth: 2.5
+                        },
+                        {
+                            label: 'Standard Rule-Based NEWS2 (Normalized %)',
+                            data: news2Scores,
+                            borderColor: '#f59e0b',
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.2,
+                            borderWidth: 2
+                        }
+                    ]
                 },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                        ticks: { color: '#64748b', font: { size: 10 } }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8' }
+                        }
                     },
-                    yRisk: {
-                        type: 'linear',
-                        position: 'left',
-                        min: 0,
-                        max: 100,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#f59e0b', callback: v => v + '%' }
-                    },
-                    yVitals: {
-                        type: 'linear',
-                        position: 'right',
-                        min: 50,
-                        max: 160,
-                        grid: { display: false },
-                        ticks: { color: '#38bdf8' }
-                    },
-                    yScore: {
-                        type: 'linear',
-                        position: 'right',
-                        min: 0,
-                        max: 16,
-                        display: false
+                    plugins: {
+                        legend: { labels: { color: '#f8fafc', font: { family: 'Plus Jakarta Sans', size: 11 } } }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            liveChart.data.labels = labels;
+            liveChart.data.datasets[0].data = mlProbs;
+            liveChart.data.datasets[1].data = news2Scores;
+            liveChart.update('none');
+        }
     }
 
-    async function forceReorderTriage() {
-        await fetch('/api/reorder', { method: 'POST' });
-        await fetchDashboardData(true);
-        await fetchChartHistory();
-    }
-
-    async function triggerManualTick() {
-        await fetch('/api/tick', { method: 'POST' });
-        await fetchDashboardData();
-        await fetchChartHistory();
-    }
-
-    async function resetSimulation() {
-        await fetch('/api/reset', { method: 'POST' });
-        await fetchDashboardData(true);
-        await fetchChartHistory();
-    }
-
-    // Polling Loop: Decoupled live data every 4 seconds
-    window.addEventListener('DOMContentLoaded', async () => {
-        await fetchDashboardData(true);
-        await fetchChartHistory();
-        setInterval(async () => {
-            await fetchDashboardData(false);
-            await fetchChartHistory();
-        }, 4000);
-    });
+    // Auto-refresh interval every 3.5 seconds
+    fetchDashboardData();
+    setInterval(fetchDashboardData, 3500);
 </script>
 
 </body>
