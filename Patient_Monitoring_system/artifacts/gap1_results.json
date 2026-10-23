@@ -2,114 +2,310 @@
   "model_metrics": {
     "temporal_lgbm": {
       "name": "Temporal LightGBM (Gap 1)",
-      "auroc": 0.9174,
+      "auroc": 0.7157,
       "auroc_ci": [
-        0.4769,
-        0.9174
+        0.6368,
+        0.7838
       ],
-      "auprc": 0.4276,
+      "auprc": 0.0215,
       "auprc_ci": [
-        0.4276,
-        0.4276
+        0.0125,
+        0.0364
       ],
-      "sensitivity_at_90_spec": 0.1667,
+      "sensitivity_at_90_spec": 0.1013,
       "sensitivity_ci": [
-        0.1667,
-        0.1667
+        0.0319,
+        0.1899
       ],
-      "test_specificity": 0.9211,
-      "val_threshold": 0.8854,
-      "mean_lead_time_hours": 16.0,
+      "test_specificity": 0.91,
+      "val_threshold": 0.6034,
+      "mean_lead_time_hours": 58.87,
       "lead_times_by_patient": [
-        16.0
+        0.0,
+        5.0,
+        0.0,
+        75.0,
+        1.0,
+        0.0,
+        81.0,
+        119.0,
+        0.0,
+        226.0,
+        0.0,
+        151.0,
+        0.0,
+        204.0,
+        21.0
       ]
     },
     "static_lgbm": {
       "name": "Static LightGBM (Point-in-Time)",
-      "auroc": 0.9167,
+      "auroc": 0.6471,
       "auroc_ci": [
-        0.4722,
-        0.9167
+        0.5465,
+        0.7643
       ],
-      "auprc": 0.2401,
+      "auprc": 0.0239,
       "auprc_ci": [
-        0.2401,
-        0.2401
+        0.0117,
+        0.0642
       ],
-      "sensitivity_at_90_spec": 0.8333,
+      "sensitivity_at_90_spec": 0.2025,
       "sensitivity_ci": [
-        0.8333,
-        0.8333
+        0.0493,
+        0.3712
       ],
-      "test_specificity": 0.8596,
-      "val_threshold": 0.9299,
-      "mean_lead_time_hours": 24.0,
+      "test_specificity": 0.9127,
+      "val_threshold": 0.6082,
+      "mean_lead_time_hours": 63.73,
       "lead_times_by_patient": [
-        24.0
+        0.0,
+        0.0,
+        70.0,
+        39.0,
+        50.0,
+        0.0,
+        32.0,
+        106.0,
+        0.0,
+        235.0,
+        5.0,
+        149.0,
+        7.0,
+        200.0,
+        63.0
       ]
     },
     "rule_news2": {
       "name": "Rule-Based NEWS2",
-      "auroc": 0.2018,
+      "auroc": 0.601,
       "auroc_ci": [
-        0.1915,
-        0.5278
+        0.4848,
+        0.7192
       ],
-      "auprc": 0.0402,
+      "auprc": 0.0179,
       "auprc_ci": [
-        0.0398,
-        0.2619
+        0.0099,
+        0.0343
       ],
-      "sensitivity_at_90_spec": 0.0,
+      "sensitivity_at_90_spec": 0.1392,
       "sensitivity_ci": [
         0.0,
-        0.0
+        0.3194
       ],
-      "test_specificity": 0.7105,
-      "val_threshold": 2.0,
-      "mean_lead_time_hours": 0.0,
+      "test_specificity": 0.9257,
+      "val_threshold": 6.0,
+      "mean_lead_time_hours": 45.73,
       "lead_times_by_patient": [
-        0.0
+        0.0,
+        0.0,
+        66.0,
+        34.0,
+        0.0,
+        0.0,
+        84.0,
+        0.0,
+        0.0,
+        212.0,
+        0.0,
+        134.0,
+        19.0,
+        72.0,
+        65.0
       ]
     },
     "rule_qsofa": {
       "name": "Rule-Based qSOFA",
-      "auroc": 0.5,
+      "auroc": 0.5807,
       "auroc_ci": [
-        0.5,
-        0.5
+        0.4786,
+        0.6923
       ],
-      "auprc": 0.05,
+      "auprc": 0.0161,
       "auprc_ci": [
-        0.05,
-        0.25
+        0.0084,
+        0.0281
       ],
-      "sensitivity_at_90_spec": 0.0,
+      "sensitivity_at_90_spec": 0.0127,
       "sensitivity_ci": [
         0.0,
-        0.0
+        0.0384
       ],
-      "test_specificity": 1.0,
-      "val_threshold": 1.0,
-      "mean_lead_time_hours": 0.0,
+      "test_specificity": 0.9464,
+      "val_threshold": 2.0,
+      "mean_lead_time_hours": 26.4,
       "lead_times_by_patient": [
-        0.0
+        0.0,
+        0.0,
+        0.0,
+        34.0,
+        64.0,
+        0.0,
+        84.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        149.0,
+        0.0,
+        0.0,
+        65.0
       ]
     }
   },
   "patient_lead_details": [
     {
-      "patient_id": "p000016",
-      "onset_hour": 25.0,
+      "patient_id": "p000008",
+      "onset_hour": 17.0,
       "lead_times": {
-        "temporal_lgbm": 16.0,
-        "static_lgbm": 24.0,
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 0.0,
         "rule_news2": 0.0,
         "rule_qsofa": 0.0
       }
+    },
+    {
+      "patient_id": "p000012",
+      "onset_hour": 27.0,
+      "lead_times": {
+        "temporal_lgbm": 5.0,
+        "static_lgbm": 0.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000078",
+      "onset_hour": 95.0,
+      "lead_times": {
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 70.0,
+        "rule_news2": 66.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000188",
+      "onset_hour": 76.0,
+      "lead_times": {
+        "temporal_lgbm": 75.0,
+        "static_lgbm": 39.0,
+        "rule_news2": 34.0,
+        "rule_qsofa": 34.0
+      }
+    },
+    {
+      "patient_id": "p000203",
+      "onset_hour": 73.0,
+      "lead_times": {
+        "temporal_lgbm": 1.0,
+        "static_lgbm": 50.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 64.0
+      }
+    },
+    {
+      "patient_id": "p000211",
+      "onset_hour": 2.0,
+      "lead_times": {
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 0.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000286",
+      "onset_hour": 85.0,
+      "lead_times": {
+        "temporal_lgbm": 81.0,
+        "static_lgbm": 32.0,
+        "rule_news2": 84.0,
+        "rule_qsofa": 84.0
+      }
+    },
+    {
+      "patient_id": "p000373",
+      "onset_hour": 141.0,
+      "lead_times": {
+        "temporal_lgbm": 119.0,
+        "static_lgbm": 106.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000584",
+      "onset_hour": 2.0,
+      "lead_times": {
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 0.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000587",
+      "onset_hour": 245.0,
+      "lead_times": {
+        "temporal_lgbm": 226.0,
+        "static_lgbm": 235.0,
+        "rule_news2": 212.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000654",
+      "onset_hour": 8.0,
+      "lead_times": {
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 5.0,
+        "rule_news2": 0.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000762",
+      "onset_hour": 152.0,
+      "lead_times": {
+        "temporal_lgbm": 151.0,
+        "static_lgbm": 149.0,
+        "rule_news2": 134.0,
+        "rule_qsofa": 149.0
+      }
+    },
+    {
+      "patient_id": "p000784",
+      "onset_hour": 24.0,
+      "lead_times": {
+        "temporal_lgbm": 0.0,
+        "static_lgbm": 7.0,
+        "rule_news2": 19.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000897",
+      "onset_hour": 213.0,
+      "lead_times": {
+        "temporal_lgbm": 204.0,
+        "static_lgbm": 200.0,
+        "rule_news2": 72.0,
+        "rule_qsofa": 0.0
+      }
+    },
+    {
+      "patient_id": "p000939",
+      "onset_hour": 66.0,
+      "lead_times": {
+        "temporal_lgbm": 21.0,
+        "static_lgbm": 63.0,
+        "rule_news2": 65.0,
+        "rule_qsofa": 65.0
+      }
     }
   ],
-  "n_test_patients": 3,
-  "n_septic_test_patients": 1,
+  "n_test_patients": 152,
+  "n_septic_test_patients": 15,
   "target_definition": "SepsisLabel==1 at any hour in [t+2, t+6] (pre-onset only)"
 }

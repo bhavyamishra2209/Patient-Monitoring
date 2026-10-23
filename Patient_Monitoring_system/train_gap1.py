@@ -51,20 +51,28 @@ def bootstrap_patient_ci(
     test_pids: List[str],
     score_col: str,
     threshold: float,
-    n_bootstraps: int = 1000,
+    n_bootstraps: int = 250,
     seed: int = 42
 ) -> Dict[str, Tuple[float, float]]:
     """Computes 95% bootstrap confidence intervals clustered at the patient level."""
     rng = np.random.RandomState(seed)
     aurocs, auprcs, sensitivities = [], [], []
 
+    # Fast pre-grouped numpy arrays per patient
+    patient_y_true = {}
+    patient_y_score = {}
+    for p, grp in df_test.groupby("patient_id"):
+        patient_y_true[p] = grp["target_deterioration"].to_numpy()
+        patient_y_score[p] = grp[score_col].to_numpy()
+
+    valid_pids = [p for p in test_pids if p in patient_y_true]
+    if not valid_pids:
+        return {"auroc_ci": [0.5, 0.5], "auprc_ci": [0.1, 0.1], "sensitivity_ci": [0.5, 0.5]}
+
     for _ in range(n_bootstraps):
-        sampled_pids = rng.choice(test_pids, size=len(test_pids), replace=True)
-        # Gather rows for sampled patients
-        dfs = [df_test[df_test["patient_id"] == p] for p in sampled_pids]
-        sub = pd.concat(dfs, ignore_index=True)
-        y_true = sub["target_deterioration"].values
-        y_score = sub[score_col].values
+        sampled_pids = rng.choice(valid_pids, size=len(valid_pids), replace=True)
+        y_true = np.concatenate([patient_y_true[p] for p in sampled_pids])
+        y_score = np.concatenate([patient_y_score[p] for p in sampled_pids])
 
         if len(np.unique(y_true)) < 2:
             continue
@@ -83,7 +91,7 @@ def bootstrap_patient_ci(
             continue
 
     def get_ci(vals, default_val):
-        if len(vals) < 50:
+        if len(vals) < 30:
             return [round(default_val, 4), round(default_val, 4)]
         return [round(float(np.percentile(vals, 2.5)), 4), round(float(np.percentile(vals, 97.5)), 4)]
 

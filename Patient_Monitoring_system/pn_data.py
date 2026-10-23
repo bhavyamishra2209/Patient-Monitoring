@@ -180,11 +180,11 @@ def create_or_load_split(df: pd.DataFrame) -> Dict[str, List[str]]:
     n_sep = len(perm_sep)
     n_non = len(perm_non)
 
-    # 70% train (14), 15% val (3), 15% test (3)
-    n_sep_train = 3
-    n_sep_val = 1
-    n_non_train = 11
-    n_non_val = 2
+    # 70% train, 15% val, 15% test — uses floor to guarantee test gets remainder
+    n_sep_train = max(1, int(n_sep * 0.70))
+    n_sep_val   = max(1, int(n_sep * 0.15)) if n_sep > 2 else (1 if n_sep > 1 else 0)
+    n_non_train = max(1, int(n_non * 0.70))
+    n_non_val   = max(1, int(n_non * 0.15)) if n_non > 2 else (1 if n_non > 1 else 0)
 
     train_pids = sorted(perm_sep[:n_sep_train] + perm_non[:n_non_train])
     val_pids = sorted(perm_sep[n_sep_train:n_sep_train + n_sep_val] + perm_non[n_non_train:n_non_train + n_non_val])

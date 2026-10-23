@@ -29,13 +29,17 @@ def compute_alarm_labels(df_pre: pd.DataFrame, df_full: pd.DataFrame) -> np.ndar
     Labels each alert as valid (1) if SepsisLabel==1 within next 6 hours, or false alarm (0) otherwise.
     """
     valid_labels = []
-    for pid, group in df_pre.groupby("patient_id", sort=False):
-        full_sub = df_full[df_full["patient_id"] == pid]
-        full_labels = full_sub["SepsisLabel"].values
-        full_culos  = full_sub["ICULOS"].values
+    full_grouped = {pid: (grp["ICULOS"].to_numpy(), grp["SepsisLabel"].to_numpy())
+                    for pid, grp in df_full.groupby("patient_id", sort=False)}
 
-        for _, row in group.iterrows():
-            c_hr = row["ICULOS"]
+    for pid, group in df_pre.groupby("patient_id", sort=False):
+        if pid not in full_grouped:
+            valid_labels.extend([0] * len(group))
+            continue
+        full_culos, full_labels = full_grouped[pid]
+        group_culos = group["ICULOS"].to_numpy()
+
+        for c_hr in group_culos:
             future_mask = (full_culos > c_hr) & (full_culos <= c_hr + 6)
             has_sepsis_next_6h = np.any(full_labels[future_mask] == 1) if np.any(future_mask) else False
             valid_labels.append(1 if has_sepsis_next_6h else 0)
@@ -70,9 +74,13 @@ def train_and_evaluate_gap2() -> Dict:
     df_val   = df_pre[df_pre["split"] == "val"].copy()
     df_test  = df_pre[df_pre["split"] == "test"].copy()
 
-    # Candidate alerts for training: top elevated-risk hours in train (mix of pre-sepsis hours and transient non-septic spikes)
-    df_train_sorted = df_train.sort_values("gap1_prob", ascending=False)
-    train_alert_candidates = df_train_sorted.iloc[:80].copy()
+    # Candidate alerts for training: actual elevated-risk hours in train
+    actual_alerts = df_train[df_train["is_alert"]]
+    if len(actual_alerts) >= 50:
+        train_alert_candidates = actual_alerts.copy()
+    else:
+        df_train_sorted = df_train.sort_values("gap1_prob", ascending=False)
+        train_alert_candidates = df_train_sorted.iloc[:min(500, len(df_train_sorted))].copy()
 
     # Features that differentiate true imminent decompensation from premature or transient alerts
     filter_features = [
@@ -116,17 +124,19 @@ def train_and_evaluate_gap2() -> Dict:
     raw_sensitivity = 1.0  # reference baseline
 
     # 2. AFTER filtering
-    # Determine validity threshold to filter false alarms while retaining true alarms
-    val_cand = df_val.sort_values("gap1_prob", ascending=False).iloc[:20].copy()
-    if len(val_cand) > 0 and val_cand["valid_alert"].sum() > 0:
-        val_cand_scores = validity_model.predict_proba(val_cand[filter_features])[:, 1]
-        valid_val_scores = val_cand_scores[val_cand["valid_alert"] == 1]
-        validity_thresh = float(np.min(valid_val_scores) * 0.95) if len(valid_val_scores) > 0 else 0.50
+    # Calibrate validity threshold on validation alerts to retain at least 90% of true deterioration alerts
+    val_alerts = df_val[df_val["is_alert"]].copy()
+    val_true_alerts = val_alerts[val_alerts["valid_alert"] == 1]
+    if len(val_true_alerts) >= 3:
+        val_true_scores = validity_model.predict_proba(val_true_alerts[filter_features])[:, 1]
+        validity_thresh = float(np.percentile(val_true_scores, 10))
+    elif len(val_alerts) > 0:
+        val_cand_scores = validity_model.predict_proba(val_alerts[filter_features])[:, 1]
+        validity_thresh = float(np.median(val_cand_scores) * 0.8)
     else:
-        validity_thresh = 0.50
+        validity_thresh = 0.40
 
-    # Ensure validity_thresh is sensible
-    validity_thresh = float(np.clip(validity_thresh, 0.30, 0.95))
+    validity_thresh = float(np.clip(validity_thresh, 0.25, 0.70))
 
     filtered_alerts = raw_alerts[raw_alerts["validity_score"] >= validity_thresh].copy()
     n_filt_alerts = len(filtered_alerts)
